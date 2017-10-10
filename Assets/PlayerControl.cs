@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour {
     public float zSpeed;
     public GameObject theCamera;
     public float gravity;
+    public int gravityDirection = 0;
     // Use this for initialization
     void Start()
     {
@@ -22,27 +23,40 @@ public class PlayerControl : MonoBehaviour {
         CharacterController myPlayer = GetComponent<CharacterController>();
        //using chcontroller cuz i don't need actual physics for my player
        
-        if (myPlayer.isGrounded)
-        {
+    
             playerDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
-            print("grounded");
-            if(Input.GetKeyDown(KeyCode.Space ))
-            {
-                playerDirection.y = 8f;
-                print("Pressed");
-            }
+        //  print("grounded");
+        //if(Input.GetKeyDown(KeyCode.Space ))
+        //{
+        //    playerDirection.y = 8f;
+        //    print("Pressed");
+        //}
 
 
-            playerDirection = transform.TransformDirection(playerDirection);
-            //This line is very important, it adjust the direction of the transformation to the  "forward"
 
-            transform.eulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, -Input.GetAxis("Horizontal") * zSpeed);
-            transform.eulerAngles += new Vector3(0, Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime, 0);
+        //This line is very important, it adjust the direction of the transformation to the  "forward"
+
+        //transform.eulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, -Input.GetAxis("Horizontal") * zSpeed);
+        //transform.localEulerAngles +=new Vector3(0, Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime, 0);
+        transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime,0,Space.Self);
             // theCamera.transform.localPosition = new Vector3 (Input.GetAxis("Horizontal")* 0.8f, theCamera.transform.localPosition.y, theCamera.transform.localPosition.z);
             playerDirection *= speed * Time.deltaTime;
-        }
+        
 
-        playerDirection.y += gravity * Time.deltaTime;
+        if(gravityDirection==0)
+        {
+           
+
+           playerDirection.y += gravity * Time.deltaTime;
+       
+        }
+        //  else if(gravityDirection==1|| gravityDirection == -1)
+        // {
+        //  playerDirection.x+= gravityDirection* gravity * Time.deltaTime;
+        // }
+
+        //   playerDirection = transform.TransformDirection(playerDirection);
+        playerDirection = transform.TransformDirection(playerDirection);
         myPlayer.Move(playerDirection); 
 
 
