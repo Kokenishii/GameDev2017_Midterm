@@ -9,14 +9,17 @@ public class TraceCubeGravity : MonoBehaviour {
     float transitionTime;
     float rotateIndex=0;
     public float desiredAngle;
+    float playerGravity;
 	// Use this for initialization
 	void Start () {
         rotateIndex = 0;
-       
-	}
+        playerGravity = myPlayer.GetComponent<PlayerControl>().gravity;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
  if(desiredAngle<0)
         {
             if (rotateIndex > myAngle)
@@ -24,15 +27,28 @@ public class TraceCubeGravity : MonoBehaviour {
                 myPlayer.transform.RotateAround(myPlayer.transform.position, new Vector3(0, 0, 1), -1);
                 rotateIndex--;
 
+                myPlayer.GetComponent<PlayerControl>().gravity = 0;
+
+                //use deltaTime, using float 
+                //When it's close enough , snap it
+            }
+            else
+            {
+                myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
             }
         }
+ //desireangle>0
         else
         {
             if (rotateIndex < myAngle)
             {
                 myPlayer.transform.RotateAround(myPlayer.transform.position, new Vector3(0, 0, 1), 1);
                 rotateIndex++;
-
+                myPlayer.GetComponent<PlayerControl>().gravity = 0;
+            }
+            else
+            {
+                myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
             }
         }
         

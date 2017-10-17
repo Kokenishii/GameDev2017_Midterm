@@ -26,11 +26,11 @@ public class PlayerControl : MonoBehaviour {
     
             playerDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
         //  print("grounded");
-        //if(Input.GetKeyDown(KeyCode.Space ))
-        //{
-        //    playerDirection.y = 8f;
-        //    print("Pressed");
-        //}
+        if(Input.GetKeyDown(KeyCode.Space )&& myPlayer.isGrounded)
+        {
+            playerDirection.y = 20f;
+            print("Pressed");
+        }
 
 
 
