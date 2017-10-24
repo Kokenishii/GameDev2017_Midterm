@@ -55,8 +55,8 @@ public class TraceCubeGravity : MonoBehaviour {
 
                 myPlayer.transform.RotateAround(myPlayer.transform.position, new Vector3(0, 0, 1), -rotateSpeed);
                 rotateIndex-=rotateSpeed;
+               // myPlayer.GetComponent<PlayerControl>().gravity = 0;
 
-              
 
                 //use deltaTime, using float 
                 //When it's close enough , snap it
@@ -64,12 +64,12 @@ public class TraceCubeGravity : MonoBehaviour {
             else
             {
            
-                myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
+             //   myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
                 
             }
         }
  //desireangle>0
-        else
+        else 
         {
             
             if (rotateIndex < myAngle)
@@ -85,14 +85,15 @@ public class TraceCubeGravity : MonoBehaviour {
                 //}
                 myPlayer.transform.RotateAround(myPlayer.transform.position, new Vector3(0, 0, 1), rotateSpeed );
                 rotateIndex+= rotateSpeed;
+                // myPlayer.GetComponent<PlayerControl>().gravity = 0;
                // myPlayer.GetComponent<PlayerControl>().gravity = 0;
-               
-                   
-                
+
+
             }
             else
             {
-                myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
+                
+               // myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
                 //myPlayer.GetComponent<PlayerControl>().gravity = playerGravity;
             }
         }
@@ -137,6 +138,7 @@ public class TraceCubeGravity : MonoBehaviour {
                 //myRain.playbackSpeed = Mathf.Lerp(myRain.playbackSpeed,0.1f,0.8f);
                 myRain.playbackSpeed = 0.1f;
                 //myPlayer = myCollider.gameObject;
+                StartCoroutine(GravityBack());
                 StartCoroutine(ChangeAngle(controlStatus));
                 underControl = false;
 
@@ -167,9 +169,10 @@ public class TraceCubeGravity : MonoBehaviour {
    private IEnumerator ChangeAngle(int myDesiredAngle)
     {
         yield return new WaitForSeconds(1.5f);
+     
         myAudio.clip = mySound[1];
         myAudio.Play();
-
+        myPlayer.GetComponent<PlayerControl>().gravity = 0;
         desiredAngle = -90f * (myDesiredAngle);
         myAngle = desiredAngle;
 
@@ -177,6 +180,12 @@ public class TraceCubeGravity : MonoBehaviour {
 
 
     }
- 
-    
+    private IEnumerator GravityBack()
+    {
+        yield return new WaitForSeconds(3f);
+      myPlayer.GetComponent<PlayerControl>().gravity = playerGravity; ;
+    }
+
+
+
 }
